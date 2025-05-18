@@ -1,0 +1,15 @@
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\bin\Debug\net9.0\TaskApplication.exe
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\bin\Debug\net9.0\TaskApplication.deps.json
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\bin\Debug\net9.0\TaskApplication.runtimeconfig.json
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\bin\Debug\net9.0\TaskApplication.dll
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\bin\Debug\net9.0\TaskApplication.pdb
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.AssemblyInfoInputs.cache
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.AssemblyInfo.cs
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.csproj.CoreCompileInputs.cache
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.sourcelink.json
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.dll
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\refint\TaskApplication.dll
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.pdb
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\TaskApplication.genruntimeconfig.cache
+D:\prog\js training\c# training\SolutionApp1\TaskApplication\obj\Debug\net9.0\ref\TaskApplication.dll
