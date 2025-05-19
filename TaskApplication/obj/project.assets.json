@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\prog\\js training\\c# training\\SolutionApp1\\TaskApplication\\TaskApplication.csproj",
+      "projectUniqueName": "D:\\prog\\c# training\\SolutionApp1\\TaskApplication\\TaskApplication.csproj",
       "projectName": "TaskApplication",
-      "projectPath": "D:\\prog\\js training\\c# training\\SolutionApp1\\TaskApplication\\TaskApplication.csproj",
+      "projectPath": "D:\\prog\\c# training\\SolutionApp1\\TaskApplication\\TaskApplication.csproj",
       "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-      "outputPath": "D:\\prog\\js training\\c# training\\SolutionApp1\\TaskApplication\\obj\\",
+      "outputPath": "D:\\prog\\c# training\\SolutionApp1\\TaskApplication\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Vova\\AppData\\Roaming\\NuGet\\NuGet.Config"

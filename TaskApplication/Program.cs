@@ -10,5 +10,7 @@ class Program
         CurrencyConverter currencyConverter = new CurrencyConverter();
 
         currencyConverter.Application();
+        
+        
     }
 }

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\prog\\js training\\c# training\\SolutionApp1\\SolutionApp1\\SolutionApp1.csproj",
+      "projectUniqueName": "D:\\prog\\c# training\\SolutionApp1\\SolutionApp1\\SolutionApp1.csproj",
       "projectName": "SolutionApp1",
-      "projectPath": "D:\\prog\\js training\\c# training\\SolutionApp1\\SolutionApp1\\SolutionApp1.csproj",
+      "projectPath": "D:\\prog\\c# training\\SolutionApp1\\SolutionApp1\\SolutionApp1.csproj",
       "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-      "outputPath": "D:\\prog\\js training\\c# training\\SolutionApp1\\SolutionApp1\\obj\\",
+      "outputPath": "D:\\prog\\c# training\\SolutionApp1\\SolutionApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Vova\\AppData\\Roaming\\NuGet\\NuGet.Config"
