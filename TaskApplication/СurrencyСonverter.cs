@@ -3,15 +3,40 @@ namespace TaskApplication;
 public class CurrencyConverter 
 
 {
+    private readonly CreditCard _creditCard = new CreditCard();
+    
     public void Application()
     {
-        CurrencyConverter currencyConverter = new CurrencyConverter();
-        
-        (string fromCurrency, string toCurrency) result = currencyConverter.Currency();
+        while (true)
+        {
+           _creditCard.PrintBalances();
+           Console.WriteLine("Введіть 'exit' щоб завершити, натисніть Enter щоб продовжити  ");
+           string userAnswer = Console.ReadLine().ToLower();
+           if (userAnswer == "exit") break;
+           (string fromCurrency, string toCurrency) = Currency();
+           Console.WriteLine($"Вкажіть суму в {fromCurrency} для конвертацію на банківську картку у {toCurrency}:");
+           decimal amount;
+           while (!decimal.TryParse(Console.ReadLine(), out amount) || amount <= 0)
+           {
+               Console.WriteLine("Введіть додатнє число:");
+           }
 
-        decimal converted = currencyConverter.Conversion(result.fromCurrency, result.toCurrency);
-
-        Console.WriteLine($"{result.fromCurrency} в {result.toCurrency}: {converted}");
+           decimal currentBalance = _creditCard.GetBalance(fromCurrency);
+           if (amount > currentBalance)
+           {
+               Console.WriteLine("Недостатньо коштів для цієї операції, знайдіть роботу");
+               continue;
+           }
+           decimal convertedAmount = ConvertCurrency(amount, fromCurrency, toCurrency);
+           _creditCard.SetBalance(fromCurrency, currentBalance - amount);
+           
+           decimal targetBalance = _creditCard.GetBalance(toCurrency);
+           _creditCard.SetBalance(toCurrency, targetBalance + convertedAmount);
+           
+           Console.WriteLine($"/nКонвертацію зроблено успішно! {amount} {fromCurrency} → {convertedAmount:F1} {toCurrency} ");
+          
+        }
+       
     }
     public (string fromCurrency, string toCurrency)  Currency()
     {
@@ -30,19 +55,11 @@ public class CurrencyConverter
        return (fromCurrency, toCurrency); 
     }
 
-    public decimal Conversion(string fromCurrency, string toCurrency)
+    private decimal ConvertCurrency(decimal amount, string fromCurrency, string toCurrency)
     {
-        Console.WriteLine($"Вкажіть суму в {fromCurrency} яку ви хочете конвертувати у {toCurrency}");
-        
-        decimal amount;
-        while (!decimal.TryParse(Console.ReadLine(), out amount)|| amount < 0)
-        {
-            Console.WriteLine("Введіть додатнє число:");
-        }
-        
         decimal fromRate = GetUSDRate(fromCurrency);
         decimal toRate = GetUSDRate(toCurrency);
-        
+
         if (fromRate == 0 || toRate == 0)
         {
             Console.WriteLine("Непідтримувана валюта.");
@@ -50,10 +67,9 @@ public class CurrencyConverter
         }
 
         decimal amountInUsd = amount / fromRate;
-        decimal convertedAmount = amountInUsd * toRate;
-
-        return convertedAmount;
+        return amountInUsd * toRate;
     }
+
 
     private decimal GetUSDRate(string currency)
     {
