@@ -13,7 +13,9 @@ public class CurrencyConverter
            Console.WriteLine("Введіть 'exit' щоб завершити, натисніть Enter щоб продовжити  ");
            string userAnswer = Console.ReadLine().ToLower();
            if (userAnswer == "exit") break;
+           
            (string fromCurrency, string toCurrency) = Currency();
+           
            Console.WriteLine($"Вкажіть суму в {fromCurrency} для конвертацію на банківську картку у {toCurrency}:");
            decimal amount;
            while (!decimal.TryParse(Console.ReadLine(), out amount) || amount <= 0)
@@ -27,6 +29,7 @@ public class CurrencyConverter
                Console.WriteLine("Недостатньо коштів для цієї операції, знайдіть роботу");
                continue;
            }
+           
            decimal convertedAmount = ConvertCurrency(amount, fromCurrency, toCurrency);
            _creditCard.SetBalance(fromCurrency, currentBalance - amount);
            
