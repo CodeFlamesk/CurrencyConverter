@@ -5,32 +5,43 @@ public class CreditCard
     public decimal BalanceUAH { get; set; } = 10000m;
     public decimal BalanceUSD { get; set; } = 1000m;
     public decimal BalanceEUR { get; set; } = 1500m;
-    
-    public decimal GetBalance(string currency)
+   public enum Balance 
     {
+        UAH,
+        USD,
+        EUR
+    }
+    public decimal GetBalance(Balance currency)
+    {
+      
         return currency switch
         {
-            "UAH" => BalanceUAH,
-            "USD" => BalanceUSD,
-            "EUR" => BalanceEUR,
+            Balance.UAH => BalanceUAH,
+            Balance.USD => BalanceUSD,
+            Balance.EUR => BalanceEUR,
             _ => 0
         };
     }
 
-    public void SetBalance(string currency, decimal newBalance)
+    public void SetBalance(Balance currency, decimal newBalance)
     {
        switch (currency)
         {
-            case "USD":
+            case Balance.USD:
                 BalanceUSD = newBalance;
                 break; 
-            case "EUR":
+            case Balance.EUR:
                 BalanceEUR = newBalance;
                 break; 
-            case "UAH":
+            case Balance.UAH:
                 BalanceUAH = newBalance;
                 break;
         }
+    }
+    
+    public static bool TryParseCurrency(string input, out Balance currency)
+    {
+        return Enum.TryParse(input, true, out currency);
     }
     public void PrintBalances()
     {

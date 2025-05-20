@@ -1,68 +1,96 @@
 namespace TaskApplication;
 
-public class CurrencyConverter 
+public class CurrencyConverter
 
 {
     private readonly CreditCard _creditCard = new CreditCard();
-    
+
     public void Application()
     {
         while (true)
         {
-           _creditCard.PrintBalances();
-           Console.WriteLine("Введіть 'exit' щоб завершити, натисніть Enter щоб продовжити  ");
-           string userAnswer = Console.ReadLine().ToLower();
-           if (userAnswer == "exit") break;
-           (string fromCurrency, string toCurrency) = Currency();
-           Console.WriteLine($"Вкажіть суму в {fromCurrency} для конвертацію на банківську картку у {toCurrency}:");
-           decimal amount;
-           while (!decimal.TryParse(Console.ReadLine(), out amount) || amount <= 0)
-           {
-               Console.WriteLine("Введіть додатнє число:");
-           }
+            string exitOrContinuePrompt = "Введіть 'exit' щоб завершити, натисніть Enter щоб продовжити";
+            string amountInputLabel = "Вкажіть суму в";
+            string conversionTargetText = "для конвертацію на банківську картку у";
+            string positiveNumberPrompt = "Введіть додатнє число:";
+            string insufficientFundsText = "Недостатньо коштів для цієї операції, знайдіть роботу";
+            string successMessage = "Конвертацію зроблено успішно!";
 
-           decimal currentBalance = _creditCard.GetBalance(fromCurrency);
-           if (amount > currentBalance)
-           {
-               Console.WriteLine("Недостатньо коштів для цієї операції, знайдіть роботу");
-               continue;
-           }
-           decimal convertedAmount = ConvertCurrency(amount, fromCurrency, toCurrency);
-           _creditCard.SetBalance(fromCurrency, currentBalance - amount);
-           
-           decimal targetBalance = _creditCard.GetBalance(toCurrency);
-           _creditCard.SetBalance(toCurrency, targetBalance + convertedAmount);
-           
-           Console.WriteLine($"/nКонвертацію зроблено успішно! {amount} {fromCurrency} → {convertedAmount:F1} {toCurrency} ");
-          
+            _creditCard.PrintBalances();
+
+            Console.WriteLine(exitOrContinuePrompt);
+            string userAnswer = Console.ReadLine().ToLower();
+
+            if (userAnswer == "exit")
+            {
+                break;
+            }
+            (CreditCard.Balance fromCurrency, CreditCard.Balance toCurrency) = GetCurrency();
+            Console.WriteLine($"{amountInputLabel} {fromCurrency} {conversionTargetText} {toCurrency}:");
+            decimal amount;
+            while (!decimal.TryParse(Console.ReadLine(), out amount) || amount <= 0)
+            {
+                Console.WriteLine(positiveNumberPrompt);
+            }
+
+            decimal currentBalance = _creditCard.GetBalance(fromCurrency);
+            if (amount > currentBalance)
+            {
+                Console.WriteLine(insufficientFundsText);
+                continue;
+            }
+
+            decimal convertedAmount = ConvertCurrency(amount, fromCurrency, toCurrency);
+            _creditCard.SetBalance(fromCurrency, currentBalance - amount);
+
+            decimal targetBalance = _creditCard.GetBalance(toCurrency);
+            _creditCard.SetBalance(toCurrency, targetBalance + convertedAmount);
+
+            Console.WriteLine(
+                $"\n{successMessage} {amount} {fromCurrency} → {convertedAmount:F1} {toCurrency} ");
         }
-       
     }
-    public (string fromCurrency, string toCurrency)  Currency()
+
+    private (CreditCard.Balance fromCurrency, CreditCard.Balance toCurrency) GetCurrency()
     {
-        Console.WriteLine("З якої валюти ви хочете конвертувати? (EUR, UAH, USD)");
-        string fromCurrency = Console.ReadLine().ToUpper();
-        
-        Console.WriteLine("В яку валюти ви хочете конвертувати? (EUR, UAH, USD)");
-        string toCurrency = Console.ReadLine().ToUpper();
-        
+        string fromCurrencyPrompt = "З якої валюти ви хочете конвертувати? (EUR, UAH, USD)";
+        string toCurrencyPrompt = "В яку валюту ви хочете конвертувати? (EUR, UAH, USD)";
+        string invalidCurrencyMessage = "Валюта введена некоректно. Спробуйте ще раз.";
+        string sameCurrencyWarning = "Ви вказали однакові валюти, спробуйте ще раз!";
+
+        Console.WriteLine(fromCurrencyPrompt);
+        string fromCurrencyInput = Console.ReadLine().ToUpper();
+
+        Console.WriteLine(toCurrencyPrompt);
+        string toCurrencyInput = Console.ReadLine().ToUpper();
+
+        if (!Enum.TryParse(fromCurrencyInput, true, out CreditCard.Balance fromCurrency) ||
+            !Enum.TryParse(toCurrencyInput, true, out CreditCard.Balance toCurrency))
+        {
+            Console.WriteLine(invalidCurrencyMessage);
+            return GetCurrency();
+        }
+
         if (toCurrency == fromCurrency)
         {
-            Console.WriteLine("Ви вказали однакові валюти, cпробуйте ще раз! (EUR, UAH, USD)");
-            return Currency();
+            Console.WriteLine(sameCurrencyWarning);
+            return GetCurrency();
         }
-        
-       return (fromCurrency, toCurrency); 
+
+        return (fromCurrency, toCurrency);
     }
 
-    private decimal ConvertCurrency(decimal amount, string fromCurrency, string toCurrency)
+
+    private decimal ConvertCurrency(decimal amount, CreditCard.Balance fromCurrency, CreditCard.Balance toCurrency)
     {
+        string unsupportedCurrencyMessage = "Непідтримувана валюта.";
+
         decimal fromRate = GetUSDRate(fromCurrency);
         decimal toRate = GetUSDRate(toCurrency);
 
         if (fromRate == 0 || toRate == 0)
         {
-            Console.WriteLine("Непідтримувана валюта.");
+            Console.WriteLine(unsupportedCurrencyMessage);
             return 0m;
         }
 
@@ -70,16 +98,14 @@ public class CurrencyConverter
         return amountInUsd * toRate;
     }
 
-
-    private decimal GetUSDRate(string currency)
+    private decimal GetUSDRate(CreditCard.Balance currency)
     {
         return currency switch
         {
-            "USD" => 1m,
-            "EUR" => 0.90m,
-            "UAH" => 41.51m,
+            CreditCard.Balance.USD => 1m,
+            CreditCard.Balance.EUR => 0.90m,
+            CreditCard.Balance.UAH => 41.51m,
             _ => 0
         };
-    
     }
 }
